@@ -1,0 +1,40 @@
+@include('header')
+<div class="country-form">
+    @isset($error)
+        <div class="alert alert-danger">{{$error}}</div>
+    @endisset
+    <h2>Страны:</h2>
+    @foreach($countries as $country)
+        <div class="country mb-2"
+            data-lat="{{$country->lat}}"
+            data-lon="{{$country->lon}}"
+            data-zoom="{{$country->zoom}}"
+        >{{$country->name}}</div>
+    @endforeach
+    <form class="mb-2" action="{{@url}}/country" method="post" id="countryForm">
+        <div class="h4">Добавить страну:</div>
+        <div class="row mb-2">
+            <div class="col-md-2">
+                Название страны*:
+            </div>
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="country_name" id="country_name">
+            </div>
+        </div>
+        <input type="hidden" name="lat" id="lat">
+        <input type="hidden" name="lon" id="lon">
+        <input type="hidden" name="zoom" id="zoom">
+        <input class="btn btn-primary" type="submit" value="Добавить">
+    </form>
+    <div class="alert alert-primary">
+        Найдите нужную Вам страну на карте.<br>
+        И установите оптимальный масштаб.
+    </div>
+    <div class="mb-2" id="googleMap" style="width:100%;height:400px;"></div>
+    <script src="{{@url}}/public/js/gm.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+    <script>
+        country();
+    </script>
+</div>
+@include('footer')

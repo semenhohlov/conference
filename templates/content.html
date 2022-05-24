@@ -1,0 +1,19 @@
+@include('header')
+<h2>Конференции:</h2>
+<a class="btn btn-primary mb-2" href="{{@url}}/add">Добавить</a>
+@foreach($conferences as $key)
+    <div class="conference mb-2 d-flex">
+        <div class="title col-md-8">
+            Название: {{$key->title}}
+        </div>
+        <div class="date col-md-2">
+            Дата: {{$key->date}}
+        </div>
+        <div class="controls col-md-2">
+            <a class="btn btn-primary" href="{{@url}}/{{$key->id}}">Детали</a>
+        <a class="btn btn-danger" href="{{@url}}/delete/{{$key->id}}">Удалить</a>
+        </div>
+    </div>
+@endforeach
+
+@include('footer')

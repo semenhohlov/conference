@@ -1,0 +1,8 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    AddType text/css .css
+    RewriteRule public/css/(.*)$ public/css/$1 [L]
+    RewriteRule public/js/(.*)$ public/js/$1 [L]
+    RewriteRule ^ public/index.php [L]
+</IfModule>

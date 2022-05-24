@@ -1,0 +1,78 @@
+@include('header')
+<div>
+    @isset($error)
+    <div class="alert alert-danger" role="alert">
+        {{$error}}
+    </div>      
+    @endisset
+    <h3>Создать конференцию</h3>
+    <form action="{{@url}}/create" method="post">
+        <div class="row mb-2">
+            <div class="col-md-2">
+                Страна: <a class="btn btn-primary" href="{{@url}}/country">+</a>
+            </div>
+            <div class="col-md-10">
+                <select class="form-select" name="country_id" id="countrySelect">
+                    @foreach($countries as $country)
+                    <option value="{{$country->id}}"
+                        data-lat="{{$country->lat}}"
+                        data-lon="{{$country->lon}}"
+                        data-zoom="{{$country->zoom}}"
+                    >{{$country->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-2">
+            Название:
+          </div>
+          <div class="col-md-10">
+            <input class="form-control"
+            type="text" name="title"
+            id="confTitle"
+            placeholder="Введите название конференции">
+          </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-6">
+                Дата: <input class="form-control" type="date" name="date">
+            </div>
+            <div class="col-md-6">
+                Время: <input class="form-control" type="time" name="time">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-2">
+                Адрес:
+            </div>
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="adress" id="confAdress">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-2">
+                Широта:
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" type="text" name="latitude" id="latitude">
+            </div>
+            <div class="col-md-2">
+                Долгота:
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" type="text" name="longitude" id="longitude">
+            </div>
+        </div>
+        <div class="mb-2" id="googleMap" style="width:100%;height:400px;"></div>
+        <input class="btn btn-primary" type="submit" value="Добавить">
+        <a class="btn btn-primary" href="{{@url}}/">Назад</a>
+    </form>
+
+<script src="{{@url}}/public/js/gm.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+<script>
+    edit();
+</script>
+</div>
+@include('footer')

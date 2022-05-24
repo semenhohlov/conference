@@ -1,0 +1,58 @@
+@include('header')
+<div>
+    @isset($error)
+    <div class="alert alert-danger" role="alert">
+        {{$error}}
+    </div>      
+    @endisset
+    <h3>Детали конференции</h3>
+        <div class="row mb-2">
+            <div class="col-md-2">
+                Страна:
+            </div>
+            <div class="col-md-10">
+                {{$country}}
+            </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-2">
+            Название:
+          </div>
+          <div class="col-md-10">
+            {{$conference->title}}
+          </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-6">
+                Дата: {{$conference->date}}
+            </div>
+        </div>
+        @isset($conference->adress)
+            <div class="row mb-2">
+                <div class="col-md-2">
+                    Адрес:
+                </div>
+                <div class="col-md-10">
+                    {{$conference->adress}}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-2">
+                    Широта: {{$conference->lat}}
+                </div>
+                <div class="col-md-2">
+                    Долгота: {{$conference->lon}}
+                </div>
+            </div>
+            <div class="mb-2" id="googleMap" style="width:100%;height:400px;"></div>
+            <script src="{{@url}}/public/js/gm.js"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+            <script>
+                detail({lat:{{$conference->lat}}, lng:{{$conference->lon}}});
+            </script>
+        @endisset
+        <a class="btn btn-primary" href="{{@url}}/">Назад</a>
+        <a class="btn btn-primary" href="{{@url}}/edit/{{$conference->id}}">Редактировать</a>
+        <a class="btn btn-danger" href="{{@url}}/delete/{{$conference->id}}">Удалить</a>
+</div>
+@include('footer')

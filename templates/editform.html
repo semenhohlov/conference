@@ -1,0 +1,90 @@
+@include('header')
+<div>
+    @isset($error)
+    <div class="alert alert-danger" role="alert">
+        {{$error}}
+    </div>      
+    @endisset
+    <h3>Изменить конференцию</h3>
+    <form action="{{@url}}/save/{{$conference->id}}" method="post">
+        <div class="row mb-2">
+            <div class="col-md-2">
+                Страна:
+            </div>
+            <div class="col-md-10">
+                <select class="form-select" name="country_id"  id="countrySelect">
+                    <option value="{{$country->id}}"
+                        data-lat="{{$country->lat}}"
+                        data-lon="{{$country->lon}}"
+                        data-zoom="{{$country->zoom}}"
+                    selected>{{$country->name}}</option>
+                    @foreach($countries as $c)
+                    <option value="{{$c->id}}"
+                        data-lat="{{$c->lat}}"
+                        data-lon="{{$c->lon}}"
+                        data-zoom="{{$c->zoom}}"
+                    >{{$c->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-2">
+            Название:
+          </div>
+          <div class="col-md-10">
+            <input class="form-control"
+                type="text" name="title" 
+                placeholder="Введите название конференции"
+                id="confTitle"
+                value="{{$conference->title}}"
+            >
+          </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-6">
+                Дата: <input class="form-control" type="date" name="date" value="{{$date}}">
+            </div>
+            <div class="col-md-6">
+                Время: <input class="form-control" type="time" name="time" value="{{$time}}">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-2">
+                Адрес:
+            </div>
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="adress" value="{{$conference->adress}}" id="confAdress">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-2">
+                Широта:
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" type="text" name="latitude" value="{{$conference->lat}}" id="latitude">
+            </div>
+            <div class="col-md-2">
+                Долгота:
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" type="text" name="longitude" value="{{$conference->lon}}" id="longitude">
+            </div>
+        </div>
+        <div class="mb-2" id="googleMap" style="width:100%;height:400px;"></div>
+        <input class="btn btn-primary" type="submit" value="Сохранить">
+        <a class="btn btn-primary" href="{{@url}}/">Назад</a>
+        <a class="btn btn-danger" href="{{@url}}/delete/{{$conference->id}}">Удалить</a>
+    </form>
+
+<script src="{{@url}}/public/js/gm.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+<script>
+    edit(
+        @isset($conference->adress)
+        {lat:{{$conference->lat}}, lng:{{$conference->lon}}}
+        @endisset
+    );
+</script>
+</div>
+@include('footer')
